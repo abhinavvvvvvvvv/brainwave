@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnDemand Chat with Speech-to-Text</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="container">
+        <div class="navbar">
+            <img src="images/logo.png" class="logo" alt="UPAJ Logo">
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Technical Approach</a></li>
+                </ul>
+            </nav>
+            <img src="images/menu.png" class="menu" alt="Menu Icon">
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <h1>OnDemand Chat Query</h1>
+            <div>
+                <label for="queryInput">Enter your query:</label>
+                <input type="text" id="queryInput" placeholder="Type your question here">
+                <button id="submitQuery">Submit Query</button>
+                <button id="recordButton">Start Recording</button>
+                <button id="newQuery" style="display: none;">Submit Another Query</button>
+            </div>
+            <div id="responseDisplay"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

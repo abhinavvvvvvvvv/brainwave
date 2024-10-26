@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop Calendar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-4xl font-bold mb-4">Crop Calendar</h1>
+
+        <!-- Region Selection -->
+        <div class="mb-4">
+            <label for="region" class="block text-sm font-medium text-gray-700">Select Region</label>
+            <div class="relative mt-1">
+                <select id="region" class="select-input">
+                    <option value="" disabled selected>Select a region</option>
+                    <option value="central">Central India</option>
+                    <option value="western">Western India</option>
+                    <option value="eastern">Eastern India</option>
+                    <option value="northern">Northern India</option>
+                    <option value="southern">Southern India</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Crop Selection -->
+        <div class="mb-4">
+            <label for="crop" class="block text-sm font-medium text-gray-700">Select Crop</label>
+            <div class="relative mt-1">
+                <select id="crop" class="select-input">
+                    <option value="" disabled selected>Select a crop</option>
+                    <option value="wheat" data-background="wheat-field.jpg">Wheat</option>
+                    <option value="rice" data-background="rice-field.jpg">Rice</option>
+                    <option value="soybean" data-background="soybean-field.jpg">Soybean</option>
+                    <option value="cotton" data-background="cotton-field.jpg">Cotton</option>
+                    <option value="sugarcane" data-background="./image/sugarcane.webp">Sugarcane</option>
+                    <option value="groundnut" data-background="groundnut-field.jpg">Groundnut</option>
+                    <option value="bajra" data-background="bajra-field.jpg">Bajra</option>
+                    <option value="jowar" data-background="jowar-field.jpg">Jowar</option>
+                    <option value="jute" data-background="jute-field.jpg">Jute</option>
+                    <option value="pulses" data-background="pulses-field.jpg">Pulses</option>
+                    <option value="maize" data-background="maize-field.jpg">Maize</option>
+                    <option value="barley" data-background="barley-field.jpg">Barley</option>
+                    <option value="mustard" data-background="mustard-field.jpg">Mustard</option>
+                    <option value="coconut" data-background="coconut-field.jpg">Coconut</option>
+                    <option value="coffee" data-background="coffee-field.jpg">Coffee</option>
+                    <option value="grape" data-background="grape-field.jpg">Grape</option>
+                    <option value="pepper" data-background="pepper-field.jpg">Pepper</option>
+                    <option value="orange" data-background="orange-field.jpg">Orange</option>
+                    <option value="potato" data-background="potato-field.jpg">Potato</option>
+                    <option value="tomato" data-background="tomato-field.jpg">Tomato</option>
+                    <option value="Berry" data-background="raspberry-field.jpg">Raspberry</option>
+                    <option value="cherry" data-background="cherry-field.jpg">Cherry</option>
+                    <option value="apple" data-background="apple-field.jpg">Apple</option>
+
+
+
+
+                    <!-- Add additional crops as needed -->
+                </select>
+            </div>
+        </div>
+
+        <!-- Crop Calendar Display -->
+        <div id="calendar" class="grid grid-cols-3 gap-4 mt-6 text-gray-700 col-span-3 text-center">
+            Please select a region and crop to see the crop calendar.
+        </div>
+    </div>
+
+    <script>
+        const regionCropMap = {
+            central: ["Wheat", "Rice", "Cotton", "Sugarcane", "Potato", "Tomato"],
+            western: ["Cotton", "Bajra", "Wheat", "Orange"],
+            eastern: ["Rice", "Jute", "Sugarcane", "Pulses", "Maize"],
+            northern: ["Wheat", "Rice", "Barley", "Sugarcane","Peach", "Berry", "Tomato"],
+            southern: ["Rice", "Coconut", "Coffee", "Grape", "Pepper"]
+        };
+
+        const cropCalendarMap = {
+            Wheat: { Nov: "Sowing", Dec: "Irrigation and Fertilization", May: "Harvesting" },
+            Rice: { Jun: "Sowing", Sep: "Irrigation and Pest Control", Oct: "Harvesting" },
+            Cotton: { May: "Sowing", Sep: "Harvesting" },
+            Grape: {
+                Dec: "Pruning and Chill Accumulation",
+                Jan: "Chill Accumulation and Bud Development",
+                Nov: "Preparation for Pruning and Dormancy",
+                Mar: "Flowering and Pollination",
+                Feb: "Bud Break and Early Flowering",
+                May: "Fruit Growth and Irrigation",
+                Jun: "Fruit Growth and Irrigation",
+                Jul: "Harvesting",
+                Aug: "Post-Harvest Care and Pruning",
+                Sep: "Post-Harvest Care and Fertilization",
+                Oct: "Dormancy Preparation",
+                Apr: "Fruit Set and Early Growth",
+                },
+               Tomato: {
+                Nov: "Soil Preparation and Seedling Care",
+                Dec: "Transplanting to Field",
+                Jan: "Initial Irrigation and Pest Control",
+                Feb: "Flowering and Fertilization",
+                Mar: "Fruit Set and Development",
+                Apr: "Continued Irrigation and Pest Control",
+                May: "Fruit Growth",
+                Jun: "Harvesting Begins",
+                Jul: "Continued Harvesting",
+                Aug: "Post-Harvest Care",
+                Sep: "Final Harvest and Soil Maintenance",
+                Oct: "Preparation for Next Cycle",
+               },
+             Sugarcane: {
+                        Feb: "Planting",
+                        Mar: "Irrigation",
+                        Apr: "Fertilization",
+                        May: "Growth Monitoring",
+                        Jun: "Harvesting",
+                    },
+                    Bajra: {
+                        May: "Sowing",
+                        Jun: "Irrigation",
+                        Jul: "Fertilization",
+                        Aug: "Harvesting",
+                        Sep: "Soil Preparation",
+                    },
+                    Jute: {
+                        Apr: "Sowing",
+                        May: "Irrigation",
+                        Jun: "Fertilization",
+                        Jul: "Harvesting",
+                        Aug: "Post-Harvest Processing",
+                    },
+                    Pulses: {
+                        Jun: "Sowing",
+                        Jul: "Irrigation",
+                        Aug: "Fertilization",
+                        Sep: "Pest Control",
+                        Oct: "Harvesting",
+                    },
+                    Maize: {
+                        Apr: "Sowing",
+                        May: "Irrigation",
+                        Jun: "Fertilization",
+                        Jul: "Pest Control",
+                        Aug: "Harvesting",
+                    },
+                    Barley: {
+                        Oct: "Sowing",
+                        Nov: "Irrigation",
+                        Dec: "Fertilization",
+                        Jan: "Pest Control",
+                        Feb: "Harvesting",
+                    },
+                    Coconut: {
+                        Mar: "Fertilization",
+                        Apr: "Irrigation",
+                        May: "Pest Control",
+                        Jun: "Growth Monitoring",
+                        Jul: "Harvesting",
+                    },
+                    Coffee: {
+                        Sep: "Pruning",
+                        Oct: "Irrigation",
+                        Nov: "Fertilization",
+                        Dec: "Pest Control",
+                        Jan: "Harvesting",
+                    },
+                    Orange: {
+                    Nov: "Preparation for Pruning and Care",
+                    Dec: "Dormancy and Chill Accumulation",
+                    Jan: "Bud Development and Pruning",
+                    Feb: "Flowering and Pollination",
+                    Mar: "Fruit Set and Early Growth",
+                    Apr: "Fruit Growth and Irrigation",
+                    May: "Fruit Growth and Pest Control",
+                    Jun: "Fruit Development and Irrigation",
+                    Jul: "Harvesting Begins",
+                    Aug: "Harvesting Continues and Post-Harvest Care",
+                    Sep: "Post-Harvest Management",
+                    Oct: "Preparation for Next Cycle",
+                    },
+                     Peach: {
+                    Nov: "Dormancy and Pruning Preparation",
+                    Dec: "Dormancy and Chill Accumulation",
+                    Jan: "Dormancy and Bud Development",
+                    Feb: "Flower Bud Formation",
+                    Mar: "Flowering and Pollination",
+                    Apr: "Fruit Set and Thinning",
+                    May: "Fruit Growth and Irrigation",
+                    Jun: "Fruit Growth and Pest Control",
+                    Jul: "Harvesting",
+                    Aug: "Post-Harvest Care and Fertilization",
+                    Sep: "Post-Harvest Management",
+                    Oct: "Preparation for Dormancy",
+                   },
+                  Pepper: {
+                    Nov: "Soil Preparation and Planting",
+                    Dec: "Seedling Care and Fertilization",
+                    Jan: "Transplanting to Field",
+                    Feb: "Irrigation and Pest Control",
+                    Mar: "Flowering and Fruit Set",
+                    Apr: "Fruit Development",
+                    May: "Fruit Growth and Harvesting",
+                    Jun: "Post-Harvest Care",
+                    Jul: "Continued Harvesting",
+                    Aug: "Final Harvest and Preparation for Next Cycle",
+                    Sep: "Soil Health Maintenance",
+                    Oct: "Preparation for Dormancy",
+                   },
+                   Potato: {
+                    Nov: "Soil Preparation and Seed Selection",
+                    Dec: "Planting and Initial Care",
+                    Jan: "Irrigation and Pest Control",
+                    Feb: "Fertilization and Weed Control",
+                    Mar: "Continued Irrigation",
+                    Apr: "Tuber Development",
+                    May: "Irrigation and Pest Control",
+                    Jun: "Harvesting Early Varieties",
+                    Jul: "Harvesting Main Crop",
+                    Aug: "Post-Harvest Storage",
+                    Sep: "Soil Health Maintenance",
+                    Oct: "Preparation for Next Cycle",
+                  },
+                   Berry: {
+                    Nov: "Dormancy and Pruning Preparation",
+                    Dec: "Dormancy and Chill Accumulation",
+                    Jan: "Bud Development",
+                    Feb: "Bud Development and Pruning",
+                    Mar: "Flower Bud Formation",
+                    Apr: "Flowering and Pollination",
+                    May: "Fruit Set and Early Growth",
+                    Jun: "Fruit Growth and Irrigation",
+                    Jul: "Harvesting Begins",
+                    Aug: "Harvesting Continues and Post-Harvest Care",
+                    Sep: "Post-Harvest Management",
+                    Oct: "Preparation for Next Cycle",
+                   },
+                   Apple: {
+                   Nov: "Dormancy and Pruning Preparation",
+                   Dec: "Dormancy and Winter Chill Accumulation",
+                   Jan: "Dormancy and Winter Chill Accumulation",
+                   Feb: "Dormancy and Pruning",
+                   Mar: "Flowering Begins",
+                   Apr: "Flowering and Pollination",
+                   May: "Fruit Set and Early Growth",
+                   Jun: "Fruit Growth and Thinning",
+                   Jul: "Fruit Growth and Irrigation",
+                   Aug: "Irrigation and Pest Control",
+                   Sep: "Irrigation and Maturation",
+                   Oct: "Harvesting",
+                 }
+            // Add additional crops and their processes here
+        };
+
+        // Update crop options based on selected region
+        function updateCrops(region) {
+            const cropSelect = document.getElementById("crop");
+            cropSelect.innerHTML = '<option value="" disabled selected>Select a crop</option>';
+
+            if (region) {
+                regionCropMap[region].forEach(crop => {
+                    const option = document.createElement("option");
+                    option.value = crop.toLowerCase();
+                    option.textContent = crop;
+                    option.dataset.background = `./images/${crop.toLowerCase()}.jpeg`; // Assumes image naming is consistent
+                    cropSelect.appendChild(option);
+                });
+                cropSelect.disabled = false;
+            } else {
+                cropSelect.disabled = true;
+            }
+        }
+
+        // Update the crop calendar display based on selected crop
+        function updateCalendar(crop) {
+            const calendar = document.getElementById("calendar");
+            calendar.innerHTML = "";
+
+            if (crop && cropCalendarMap[crop]) {
+                const processes = cropCalendarMap[crop];
+                const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+                months.forEach(month => {
+                    const box = document.createElement("div");
+                    box.className = `calendar-month-box ${processes[month] ? "process" : "no-process"}`;
+                    box.innerHTML = `<strong>${month}</strong><p>${processes[month] || ""}</p>`;
+                    calendar.appendChild(box);
+                });
+            } else {
+                calendar.innerHTML = `<p class="text-gray-700 col-span-3 text-center">Please select a region and crop to see the crop calendar.</p>`;
+            }
+        }
+        // Event Listeners
+        document.getElementById("region").addEventListener("change", function () {
+            updateCrops(this.value);
+            updateCalendar("");
+        });
+
+        document.getElementById("crop").addEventListener("change", function () {
+            updateCalendar(this.value.charAt(0).toUpperCase() + this.value.slice(1)); // Capitalize crop key
+            changeBackground(this);
+        });
+    </script>
+</body>
+</html>
